@@ -1,0 +1,3 @@
+pack set-default-builder harbor2.km.spaceforce.mil/tbs/build-service/default
+
+pack build waptwebservice-chwillis -p ./waptwebservice -b ./waptwebservice-buildpack -b harbor2.km.spaceforce.mil/tbs/tbs/tanzu-buildpacks_dotnet-core --trust-builder

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+if [[ ! $(cat manifest.yml | grep spring-music) ]]; then
+   exit 100
+fi

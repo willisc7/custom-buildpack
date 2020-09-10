@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+# Resolves to /layers/<BUILDPACK_ID>
+LAYERS_DIR=$1
+
+echo "---> Copy dependencies to the correct location"
+
+# Need a directory under the layer directory
+DEPENDENCIES_DIR="$LAYERS_DIR"/dependencies
+
+# Set environment variable persistently
+mkdir -p "$DEPENDENCIES_DIR"/env
+echo "$DEPENDENCIES_DIR" > "$DEPENDENCIES_DIR"/env/DEPENDENCIES_DIR
+
+# Necessary to expose dependencies in buildpack
+echo -e 'launch = true' > "$DEPENDENCIES_DIR.toml"
+cp $CNB_BUILDPACK_DIR/helloworld "$DEPENDENCIES_DIR"
+
+echo "---> Done"

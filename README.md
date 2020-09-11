@@ -1,7 +1,8 @@
 # Custom Buildpack
 
 #### Assumptions
-* TBS 1.0.2 is deployed
+* TBS 1.0.2 is deployed 
+    * Note: all steps leading up to the first step that uses the `kp` command can be done without TBS or kpack installed on a kubernetes cluster
 * `kp clusterstack list` shows all stacks as **READY**
 
 #### Steps
@@ -9,6 +10,7 @@
 0. Install `pack` CLI (https://github.com/buildpacks/pack)
 0. `git clone https://github.com/cloudfoundry-samples/spring-music`
 0. Set the default builder to the same one TBS uses `pack set-default-builder <CONTAINER_REGISTRY_FQDN>/<TBS_PROJECT>/build-service/default`
+    * If you dont have TBS installed, you can just use the Paketo builder be running `pack set-default-builder paketobuildpacks/builder:full`
 0. Make sure the image builds with the default builder `pack build spring-music -p $ROOT_DIR/spring-music --trust-builder`
 0. When you run `pack build spring-music -p $ROOT_DIR/spring-music -b $ROOT_DIR/sample-buildpack --trust-builder` the following will happen:
     * `sample-buildpack/bin/detect` will be run from the root of the git repo specified (e.g. the `spring-music` directory) and determine whether or not to run whatever is in `sample-buildpack/bin/build`. In this case it will run because `manifest.yml`, inside the `spring-music` directory, contains the string "spring-music"
